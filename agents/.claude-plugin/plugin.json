@@ -1,6 +1,6 @@
 {
   "name": "cli-kanban",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A kanban board of Markdown files in your repository: a skill that tells the agent how to work with tickets, and an MCP server to move them.",
   "author": {
     "name": "Jan Truhlar",
@@ -10,5 +10,10 @@
   "homepage": "https://github.com/JanTcz/cli-kanban",
   "repository": "https://github.com/JanTcz/cli-kanban",
   "license": "MIT",
-  "keywords": ["kanban", "tickets", "markdown", "mcp"]
+  "keywords": [
+    "kanban",
+    "tickets",
+    "markdown",
+    "mcp"
+  ]
 }

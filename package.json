@@ -1,6 +1,6 @@
 {
   "name": "cli-kanban",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A kanban board of Markdown files in your repository, for you and your AI coding agents: CLI, MCP server, and a plugin for Claude Code and Codex. No dependencies.",
   "type": "module",
   "license": "MIT",

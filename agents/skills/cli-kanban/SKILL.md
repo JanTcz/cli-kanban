@@ -1,6 +1,6 @@
 ---
 name: cli-kanban
-description: Track work on the project's kanban board, a kanban/ folder of Markdown tickets (one folder per state). Use when the project has a kanban/ folder, when the user mentions tickets, the board, backlog, todo or doing, when starting or finishing a non-trivial task, or when asked to plan work into tickets.
+description: Track work on the project's kanban board, a kanban/ folder of Markdown tickets (one folder per state). Use in a project that has a kanban/ folder - when starting or finishing a non-trivial task there, or when the user mentions tickets, the board, backlog, todo or doing - and when the user asks for a kanban board or to plan work into tickets.
 ---
 
 # cli-kanban
@@ -13,6 +13,9 @@ backlog → todo → doing → testing → done
                    ↓  ↑
                   blocked
 ```
+
+No `kanban/` folder in the project: don't create one unless the user asks for
+a board. Without one, this skill doesn't apply.
 
 Use the `kanban_*` MCP tools when they are available. Otherwise run the CLI:
 `npx -y cli-kanban@0 <command>` (JSON output when piped). Never move or
