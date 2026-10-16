@@ -52,21 +52,23 @@ Three ways to use it:
 
 ## Getting started
 
+The plugin is in the [JanTcz marketplace](https://github.com/JanTcz/marketplace).
+
 ### Claude Code
 
 ```
-/plugin marketplace add JanTcz/cli-kanban
-/plugin install microkanban@cli-kanban
+/plugin marketplace add JanTcz/marketplace
+/plugin install microkanban@jantcz
 ```
 
 ### Codex
 
 ```bash
-codex plugin marketplace add JanTcz/cli-kanban
+codex plugin marketplace add JanTcz/marketplace
 ```
 
-then enable `microkanban@cli-kanban` in the plugin list (or in
-`.codex/config.toml`: `[plugins."microkanban@cli-kanban"]` with `enabled = true`).
+then enable `microkanban@jantcz` in the plugin list (or in
+`.codex/config.toml`: `[plugins."microkanban@jantcz"]` with `enabled = true`).
 
 ### Any other MCP client
 
@@ -203,8 +205,7 @@ src/cli.js        the microkanban command
 src/mcp.js        the MCP server (JSON-RPC 2.0 over stdio)
 bin/              microkanban
 agents/           the plugin: skill, .mcp.json, Claude Code and Codex manifests
-.claude-plugin/   the Claude Code marketplace (this repository)
-.agents/plugins/  the Codex marketplace (this repository)
+                  (listed in github.com/JanTcz/marketplace)
 test/             node:test, 100 % coverage of src/ enforced by npm test
 ```
 

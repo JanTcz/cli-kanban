@@ -45,13 +45,6 @@ test('the skill has the frontmatter agents need', () => {
   }
 });
 
-test('both marketplaces list the plugin folder', () => {
-  const claude = json('.claude-plugin/marketplace.json');
-  const codex = json('.agents/plugins/marketplace.json');
-  assert.equal(claude.plugins[0].source, './agents');
-  assert.equal(codex.plugins[0].source.path, './agents');
-  for (const m of [claude, codex]) assert.equal(m.plugins[0].name, 'microkanban');
-});
 
 test('the npm package ships the plugin', () => {
   assert.deepEqual(pkg.files, ['src', 'bin', 'agents']);

@@ -6,9 +6,8 @@ One folder for every coding agent: the `microkanban` skill
 
 | Agent | Manifest | Install |
 |---|---|---|
-| Claude Code | `.claude-plugin/plugin.json` | `/plugin marketplace add JanTcz/cli-kanban`, then `/plugin install microkanban@cli-kanban` |
-| Codex | `.codex-plugin/plugin.json` | `codex plugin marketplace add JanTcz/cli-kanban`, then enable `microkanban@cli-kanban` |
+| Claude Code | `.claude-plugin/plugin.json` | `/plugin marketplace add JanTcz/marketplace`, then `/plugin install microkanban@jantcz` |
+| Codex | `.codex-plugin/plugin.json` | `codex plugin marketplace add JanTcz/marketplace`, then enable `microkanban@jantcz` |
 | Others | none | copy `skills/microkanban/` into the agent's skills folder and the server from `.mcp.json` into its MCP config |
 
-The marketplaces are in the repository root: `.claude-plugin/marketplace.json`
-and `.agents/plugins/marketplace.json`.
+The marketplace that lists it is [JanTcz/marketplace](https://github.com/JanTcz/marketplace).
