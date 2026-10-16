@@ -18,7 +18,7 @@ test('both plugin manifests have the package version and point at files that exi
   const claude = json('agents/.claude-plugin/plugin.json');
   const codex = json('agents/.codex-plugin/plugin.json');
   for (const m of [claude, codex]) {
-    assert.equal(m.name, 'microkanban');
+    assert.equal(m.name, 'cli-kanban');
     assert.equal(m.version, pkg.version);
     assert.equal(m.license, pkg.license);
   }
@@ -29,16 +29,16 @@ test('both plugin manifests have the package version and point at files that exi
 });
 
 test('the MCP config runs this package\'s major version', () => {
-  const server = json('agents/.mcp.json').mcpServers.microkanban;
+  const server = json('agents/.mcp.json').mcpServers['cli-kanban'];
   assert.equal(server.command, 'npx');
   assert.deepEqual(server.args, ['-y', `${pkg.name}@${pkg.version.split('.')[0]}`, 'mcp']);
 });
 
 test('the skill has the frontmatter agents need', () => {
-  const skill = fs.readFileSync(new URL('../agents/skills/microkanban/SKILL.md', import.meta.url), 'utf8');
+  const skill = fs.readFileSync(new URL('../agents/skills/cli-kanban/SKILL.md', import.meta.url), 'utf8');
   const fm = /^---\nname: (.+)\ndescription: (.+)\n---\n/.exec(skill);
   assert.ok(fm);
-  assert.equal(fm[1], 'microkanban');
+  assert.equal(fm[1], 'cli-kanban');
   assert.ok(fm[2].length < 1024);
   for (const tool of api.TOOLS.map((t) => t.name).filter((n) => n !== 'kanban_init' && n !== 'kanban_list')) {
     assert.ok(skill.includes(tool), `the skill mentions ${tool}`);
@@ -48,5 +48,5 @@ test('the skill has the frontmatter agents need', () => {
 
 test('the npm package ships the plugin', () => {
   assert.deepEqual(pkg.files, ['src', 'bin', 'agents']);
-  assert.equal(pkg.bin.microkanban, './bin/microkanban.js');
+  assert.equal(pkg.bin['cli-kanban'], './bin/cli-kanban.js');
 });

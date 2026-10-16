@@ -56,7 +56,7 @@ export class Board {
   summary(): { op: 'summary'; root: string; exists: boolean; counts: Record<State, number>; doing: { ticket: string; title: string }[] };
 }
 
-/** The `kanban/` folder: MICROKANBAN_ROOT, else the nearest kanban/ or git repository above the project. */
+/** The `kanban/` folder: CLI_KANBAN_ROOT, else the nearest kanban/ or git repository above the project. */
 export function findRoot(opts?: { cwd?: string; env?: Record<string, string | undefined> }): string;
 export function normalizeKey(key: string): string;
 export function slugify(text: string): string;

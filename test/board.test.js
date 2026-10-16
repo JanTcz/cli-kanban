@@ -19,8 +19,8 @@ import { board, clock, project, read } from './helpers.js';
 const usage = (fn) => assert.throws(fn, (e) => e instanceof KanbanError && e.code === 'usage');
 const op = (fn, re) => assert.throws(fn, (e) => e instanceof KanbanError && e.code === 'op' && re.test(e.message));
 
-test('findRoot: MICROKANBAN_ROOT wins, relative to cwd', () => {
-  assert.equal(findRoot({ cwd: '/a/b', env: { MICROKANBAN_ROOT: 'board' } }), path.resolve('/a/b/board'));
+test('findRoot: CLI_KANBAN_ROOT wins, relative to cwd', () => {
+  assert.equal(findRoot({ cwd: '/a/b', env: { CLI_KANBAN_ROOT: 'board' } }), path.resolve('/a/b/board'));
 });
 
 test('findRoot: the nearest kanban/ folder above the start', (t) => {
@@ -42,7 +42,7 @@ test('findRoot: CLAUDE_PROJECT_DIR is the start', (t) => {
 });
 
 test('findRoot: ./kanban when nothing is found up to the filesystem root', (t) => {
-  const dir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'microkanban-bare-')));
+  const dir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'cli-kanban-bare-')));
   t.after(() => fs.rmSync(dir, { recursive: true }));
   assert.equal(findRoot({ cwd: dir, env: {} }), path.join(dir, 'kanban'));
 });
@@ -80,12 +80,12 @@ test('init creates a folder per state once, with .gitkeep', (t) => {
 test('add: numbers automatically, writes frontmatter, title and note', (t) => {
   const b = board(t);
   const r = b.add({ title: 'Fix the login', state: 'todo', note: '- [ ] form\n', sprint: 's1' });
-  assert.deepEqual(r, { op: 'add', ticket: 'MK-1', state: 'todo', path: 'kanban/todo/MK-1-fix-the-login.md' });
+  assert.deepEqual(r, { op: 'add', ticket: 'KB-1', state: 'todo', path: 'kanban/todo/KB-1-fix-the-login.md' });
   assert.equal(
     read(b, r.path),
-    '---\nticket: MK-1\nstate: todo\ncreated: 2026-01-01T00:00:00.000Z\nsprint: s1\n---\n\n# MK-1: Fix the login\n\n- [ ] form\n',
+    '---\nticket: KB-1\nstate: todo\ncreated: 2026-01-01T00:00:00.000Z\nsprint: s1\n---\n\n# KB-1: Fix the login\n\n- [ ] form\n',
   );
-  assert.equal(b.add({ title: 'Second' }).ticket, 'MK-2');
+  assert.equal(b.add({ title: 'Second' }).ticket, 'KB-2');
   assert.equal(b.add({ title: 'Other', prefix: 'web' }).ticket, 'WEB-1');
 });
 
@@ -141,16 +141,16 @@ test('move: renames, records the transition, updates the state field', (t) => {
   const b = board(t, { now });
   b.add({ title: 'Task', state: 'todo' });
   now.advance(1);
-  const r = b.move('mk-1', 'doing', { note: 'picked up\n' });
-  assert.deepEqual(r, { op: 'move', ticket: 'MK-1', from: 'todo', to: 'doing', path: 'kanban/doing/MK-1-task.md', transitions: 1 });
-  assert.ok(!fs.existsSync(path.join(b.root, 'todo', 'MK-1-task.md')));
+  const r = b.move('kb-1', 'doing', { note: 'picked up\n' });
+  assert.deepEqual(r, { op: 'move', ticket: 'KB-1', from: 'todo', to: 'doing', path: 'kanban/doing/KB-1-task.md', transitions: 1 });
+  assert.ok(!fs.existsSync(path.join(b.root, 'todo', 'KB-1-task.md')));
   const c = read(b, r.path);
   assert.match(c, /^state: doing$/m);
   assert.match(c, /\n## Transition 2026-01-01T01:00:00.000Z todo → doing\npicked up\n$/);
-  assert.equal(b.move('MK-1', 'testing').transitions, 2);
-  assert.match(read(b, 'kanban/testing/MK-1-task.md'), /doing → testing\n$/);
-  op(() => b.move('MK-1', 'testing'), /already in testing/);
-  usage(() => b.move('MK-1', 'review'));
+  assert.equal(b.move('KB-1', 'testing').transitions, 2);
+  assert.match(read(b, 'kanban/testing/KB-1-task.md'), /doing → testing\n$/);
+  op(() => b.move('KB-1', 'testing'), /already in testing/);
+  usage(() => b.move('KB-1', 'review'));
 });
 
 test('move: a file without frontmatter, and frontmatter without a state', (t) => {
@@ -239,5 +239,5 @@ test('summary', (t) => {
 
 test('a board on its own works with the real clock', (t) => {
   const b = new Board(path.join(project(t), 'kanban'));
-  assert.match(b.add({ title: 'x' }).path, /MK-1-x\.md$/);
+  assert.match(b.add({ title: 'x' }).path, /KB-1-x\.md$/);
 });

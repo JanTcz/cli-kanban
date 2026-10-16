@@ -43,7 +43,7 @@ jobs:
       - run: npm pack
       - run: |
           cd "$(mktemp -d)" && git init -q
-          npm install --no-save "$GITHUB_WORKSPACE"/microkanban-*.tgz
-          npx microkanban init --text && npx microkanban add "Smoke test" --text
-          test -f node_modules/microkanban/agents/skills/microkanban/SKILL.md
-          echo '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | npx microkanban mcp | grep -q kanban_move
+          npm install --no-save "$GITHUB_WORKSPACE"/cli-kanban-*.tgz
+          npx cli-kanban init --text && npx cli-kanban add "Smoke test" --text
+          test -f node_modules/cli-kanban/agents/skills/cli-kanban/SKILL.md
+          echo '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | npx cli-kanban mcp | grep -q kanban_move

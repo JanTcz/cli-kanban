@@ -1,4 +1,4 @@
-// The `microkanban` command. JSON on a pipe (or with --json), a short summary on a terminal.
+// The `cli-kanban` command. JSON on a pipe (or with --json), a short summary on a terminal.
 
 import fs from 'node:fs';
 import { Board, KanbanError, STATES, findRoot } from './board.js';
@@ -8,13 +8,13 @@ export const VERSION = JSON.parse(fs.readFileSync(new URL('../package.json', imp
 
 const BOOLEAN = new Set(['json', 'text', 'help', 'archive', 'uncheck', 'version']);
 
-export const USAGE = `microkanban ${VERSION}: a kanban board of Markdown files, for you and your coding agents
+export const USAGE = `cli-kanban ${VERSION}: a kanban board of Markdown files, for you and your coding agents
 
-Usage: microkanban <command> [arguments] [--flags]
+Usage: cli-kanban <command> [arguments] [--flags]
 
   init                                    create kanban/ with a folder per state
-  add [TICKET] [TITLE] [--state=backlog]  new ticket; without TICKET the next free MK-<n>
-      [--slug=s] [--note=text] [--sprint=id] [--prefix=MK]
+  add [TICKET] [TITLE] [--state=backlog]  new ticket; without TICKET the next free KB-<n>
+      [--slug=s] [--note=text] [--sprint=id] [--prefix=KB]
   summary                                 ticket counts per state and what is in doing
   list [--state=s] [--ticket=KEY]         tickets by state (alias: ls)
   show TICKET                             the ticket's file
@@ -28,7 +28,7 @@ Usage: microkanban <command> [arguments] [--flags]
   mcp                                     MCP server on stdin/stdout
 
 States: ${STATES.join(', ')}
-Global: --root=<dir> (the kanban folder, also MICROKANBAN_ROOT), --json, --text, --help, --version
+Global: --root=<dir> (the kanban folder, also CLI_KANBAN_ROOT), --json, --text, --help, --version
 `;
 
 /** `--a=b`, `--a b`, boolean flags and positionals; `--` ends the flags. */
@@ -89,7 +89,7 @@ const text = {
           STATES.map((s) => `${s} ${r.counts[s]}`).join(' · '),
           ...r.doing.map((d) => `doing: ${d.ticket} ${d.title}`),
         ].join('\n')
-      : `no board at ${r.root}/ (microkanban init creates it)`,
+      : `no board at ${r.root}/ (cli-kanban init creates it)`,
   show: (r) => r.content.trimEnd(),
   move: (r) => `moved ${r.ticket}: ${r.from} → ${r.to}`,
   close: (r) => `closed ${r.ticket} → ${r.path}`,
@@ -151,7 +151,7 @@ function run(board, command, positional, flags) {
         maxBlockedHours: hours(flags['max-blocked-age'], 'max-blocked-age', 72),
       });
     default:
-      throw new KanbanError(`unknown command "${command}"; microkanban --help lists them`, 'usage');
+      throw new KanbanError(`unknown command "${command}"; cli-kanban --help lists them`, 'usage');
   }
 }
 
@@ -180,7 +180,7 @@ export async function main(args, io = {}) {
       stdout.write(USAGE);
       return 0;
     }
-    const root = flags.root ? findRoot({ cwd, env: { MICROKANBAN_ROOT: flags.root } }) : findRoot({ cwd, env });
+    const root = flags.root ? findRoot({ cwd, env: { CLI_KANBAN_ROOT: flags.root } }) : findRoot({ cwd, env });
     const board = new Board(root, { now });
     if (command === 'mcp') {
       await serve({ board, input: stdin, output: stdout, version: VERSION });
@@ -192,7 +192,7 @@ export async function main(args, io = {}) {
     return result.op === 'audit' && !result.ok ? 1 : 0;
   } catch (err) {
     if (!(err instanceof KanbanError)) throw err;
-    stderr.write(`microkanban: ${err.message}\n`);
+    stderr.write(`cli-kanban: ${err.message}\n`);
     return err.code === 'usage' ? 2 : 1;
   }
 }

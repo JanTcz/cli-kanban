@@ -1,14 +1,14 @@
 <h1>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
-    <img src="assets/logo-light.svg" alt="microkanban" height="56">
+    <img src="assets/logo-light.svg" alt="cli-kanban" height="56">
   </picture>
 </h1>
 
 [![test](https://github.com/JanTcz/cli-kanban/actions/workflows/test.yml/badge.svg)](https://github.com/JanTcz/cli-kanban/actions/workflows/test.yml)
 [![coverage: 100%](https://img.shields.io/badge/coverage-100%25-brightgreen)](https://github.com/JanTcz/cli-kanban/actions/workflows/test.yml "Lines, branches and functions of src/; npm test fails below 100 %")
-[![npm](https://img.shields.io/npm/v/microkanban)](https://www.npmjs.com/package/microkanban)
-[![Socket Badge](https://socket.dev/api/badge/npm/package/microkanban)](https://socket.dev/npm/package/microkanban)
+[![npm](https://img.shields.io/npm/v/cli-kanban)](https://www.npmjs.com/package/cli-kanban)
+[![Socket Badge](https://socket.dev/api/badge/npm/package/cli-kanban)](https://socket.dev/npm/package/cli-kanban)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 **A kanban board that lives in your repository, for you and your coding agents.**
@@ -19,20 +19,20 @@ the end of an agent's context window.
 
 ```
 kanban/
-  backlog/   MK-7-dark-mode.md
-  todo/      MK-5-rate-limit-the-api.md   PROJ-142-export-to-csv.md
-  doing/     MK-4-fix-the-login-form.md
+  backlog/   KB-7-dark-mode.md
+  todo/      KB-5-rate-limit-the-api.md   PROJ-142-export-to-csv.md
+  doing/     KB-4-fix-the-login-form.md
   testing/
-  blocked/   MK-6-payment-webhooks.md
-  done/      MK-1-… MK-2-… MK-3-…
+  blocked/   KB-6-payment-webhooks.md
+  done/      KB-1-… KB-2-… KB-3-…
   .archive/  sprint-1/ …
 ```
 
 Three ways to use it:
 
-- **`npx microkanban`**, a CLI for you and for scripts: JSON on a pipe, a
+- **`npx cli-kanban`**, a CLI for you and for scripts: JSON on a pipe, a
   short summary on a terminal.
-- **An MCP server** (`microkanban mcp`) with a tool for every operation, for any
+- **An MCP server** (`cli-kanban mcp`) with a tool for every operation, for any
   agent that speaks MCP.
 - **A plugin for Claude Code and Codex**: the MCP server plus a skill that
   tells the agent *how* to work with the board: pick up a ticket, move it to
@@ -47,7 +47,7 @@ Three ways to use it:
   board change together with the code that changed it.
 - **Next to Jira or GitHub, or instead of them.** Use your tracker's keys
   (`PROJ-142`) and the board is the working copy; or let it number tickets
-  itself (`MK-1`, `MK-2`, …).
+  itself (`KB-1`, `KB-2`, …).
 - **No dependencies, no service, no account.** Plain ESM, Node 20 or newer.
 
 ## Getting started
@@ -58,7 +58,7 @@ The plugin is in the [JanTcz marketplace](https://github.com/JanTcz/marketplace)
 
 ```
 /plugin marketplace add JanTcz/marketplace
-/plugin install microkanban@jantcz
+/plugin install cli-kanban@jantcz
 ```
 
 ### Codex
@@ -67,49 +67,49 @@ The plugin is in the [JanTcz marketplace](https://github.com/JanTcz/marketplace)
 codex plugin marketplace add JanTcz/marketplace
 ```
 
-then enable `microkanban@jantcz` in the plugin list (or in
-`.codex/config.toml`: `[plugins."microkanban@jantcz"]` with `enabled = true`).
+then enable `cli-kanban@jantcz` in the plugin list (or in
+`.codex/config.toml`: `[plugins."cli-kanban@jantcz"]` with `enabled = true`).
 
 ### Any other MCP client
 
 ```json
 {
   "mcpServers": {
-    "microkanban": { "command": "npx", "args": ["-y", "microkanban@0", "mcp"] }
+    "cli-kanban": { "command": "npx", "args": ["-y", "cli-kanban@0", "mcp"] }
   }
 }
 ```
 
 The skill is plain [Agent Skills](https://agentskills.io) Markdown: copy
-[`agents/skills/microkanban/`](agents/skills/microkanban/SKILL.md) into the
+[`agents/skills/cli-kanban/`](agents/skills/cli-kanban/SKILL.md) into the
 agent's skills folder.
 
 ### The board
 
 ```bash
-npx microkanban init      # kanban/ with a folder per state (.gitkeep in each, commit it)
+npx cli-kanban init      # kanban/ with a folder per state (.gitkeep in each, commit it)
 ```
 
 Without `init` the first `add` creates what it needs. The board is the nearest
 `kanban/` folder above the current directory, or `kanban/` in the root of the
-git repository; `--root` or `MICROKANBAN_ROOT` points elsewhere.
+git repository; `--root` or `CLI_KANBAN_ROOT` points elsewhere.
 
 ## The CLI
 
 ```bash
-microkanban add "Fix the login form" --state=todo --note="- [ ] validation
-- [ ] error message"                          # MK-1, the next free number
-microkanban add PROJ-142 "Export to CSV"       # a key from your tracker
-microkanban summary                            # counts per state, what's in doing
-microkanban list --state=todo                  # alias: ls
-microkanban show MK-1
-microkanban move MK-1 doing --note="started"   # alias: mv
-microkanban check MK-1 2                       # tick the 2nd checkbox (--uncheck)
-microkanban append MK-1 --section=Notes --note="Chose zod: the API uses it already"
-microkanban move MK-1 testing --note="verify: npm test, then the form by hand"
-microkanban close MK-1 --note="merged in #42"  # to done/
-microkanban close MK-1 --archive --sprint=s1   # to .archive/s1/
-microkanban audit                              # exit 1 when it finds something
+cli-kanban add "Fix the login form" --state=todo --note="- [ ] validation
+- [ ] error message"                          # KB-1, the next free number
+cli-kanban add PROJ-142 "Export to CSV"        # a key from your tracker
+cli-kanban summary                             # counts per state, what's in doing
+cli-kanban list --state=todo                   # alias: ls
+cli-kanban show KB-1
+cli-kanban move KB-1 doing --note="started"    # alias: mv
+cli-kanban check KB-1 2                        # tick the 2nd checkbox (--uncheck)
+cli-kanban append KB-1 --section=Notes --note="Chose zod: the API uses it already"
+cli-kanban move KB-1 testing --note="verify: npm test, then the form by hand"
+cli-kanban close KB-1 --note="merged in #42"   # to done/
+cli-kanban close KB-1 --archive --sprint=s1    # to .archive/s1/
+cli-kanban audit                               # exit 1 when it finds something
 ```
 
 | Command | Does |
@@ -137,12 +137,12 @@ States: `backlog → todo → doing → testing → done`, and `blocked` from an
 
 ```markdown
 ---
-ticket: MK-4
+ticket: KB-4
 state: doing
 created: 2026-10-16T08:12:03.000Z
 ---
 
-# MK-4: Fix the login form
+# KB-4: Fix the login form
 
 - [x] validation
 - [ ] error message
@@ -162,7 +162,7 @@ the story. Everything else in the file is yours: edit it by hand as you like.
 
 ## The MCP server
 
-`microkanban mcp` speaks MCP over stdio (protocol versions 2024-11-05 to
+`cli-kanban mcp` speaks MCP over stdio (protocol versions 2024-11-05 to
 2025-06-18). Every tool returns the same JSON as the CLI, as text and as
 `structuredContent`; a ticket that doesn't exist is a tool result with
 `isError`, not a protocol error.
@@ -180,13 +180,13 @@ the story. Everything else in the file is yours: edit it by hand as you like.
 | `kanban_audit` | `max_doing_hours`, `max_blocked_hours` |
 | `kanban_init` | Creates the board |
 
-The server finds the board like the CLI does, from `MICROKANBAN_ROOT`,
+The server finds the board like the CLI does, from `CLI_KANBAN_ROOT`,
 `CLAUDE_PROJECT_DIR` or its working directory.
 
 ## As a library
 
 ```js
-import { Board, findRoot } from 'microkanban';
+import { Board, findRoot } from 'cli-kanban';
 
 const board = new Board(findRoot());
 const { ticket } = board.add({ title: 'Nightly backup', state: 'todo' });
@@ -201,9 +201,9 @@ Every method returns the JSON the CLI prints and throws a `KanbanError`
 
 ```
 src/board.js      the board: every operation, no I/O besides the kanban/ folder
-src/cli.js        the microkanban command
+src/cli.js        the cli-kanban command
 src/mcp.js        the MCP server (JSON-RPC 2.0 over stdio)
-bin/              microkanban
+bin/              cli-kanban
 agents/           the plugin: skill, .mcp.json, Claude Code and Codex manifests
                   (listed in github.com/JanTcz/marketplace)
 test/             node:test, 100 % coverage of src/ enforced by npm test
@@ -222,8 +222,8 @@ three versions match, runs the tests and publishes to npm with provenance
 
 ## Origin
 
-microkanban grew up inside a larger agent framework, where it tracked over a hundred
-tickets worked on by parallel coding agents. This is the board on its own,
+cli-kanban started as the "microkanban" of a larger agent framework, where it
+tracked over a hundred tickets worked on by parallel coding agents. This is the board on its own,
 with the framework's specifics taken out, and its file format unchanged: boards
 from there work here as they are.
 

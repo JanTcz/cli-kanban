@@ -38,7 +38,7 @@ export const TOOLS = [
       note: { ...note, description: 'Body: context, acceptance criteria as "- [ ]" checkboxes' },
       slug: { type: 'string' },
       sprint: { type: 'string' },
-      prefix: { type: 'string', description: 'Key prefix for automatic numbering, default MK' },
+      prefix: { type: 'string', description: 'Key prefix for automatic numbering, default KB' },
     },
   ),
   tool('kanban_move', 'Move a ticket to another state; records the transition and an optional note.', { ticket, to: state, note }, ['ticket', 'to']),
@@ -96,7 +96,7 @@ export function handle(message, { board, version }) {
         result = {
           protocolVersion: PROTOCOL_VERSIONS.includes(params.protocolVersion) ? params.protocolVersion : PROTOCOL_VERSIONS[0],
           capabilities: { tools: {} },
-          serverInfo: { name: 'microkanban', version },
+          serverInfo: { name: 'cli-kanban', version },
           instructions: INSTRUCTIONS,
         };
         break;

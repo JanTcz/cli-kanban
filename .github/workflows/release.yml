@@ -1,4 +1,4 @@
-# A release from a version tag (v0.2.0): tests, then microkanban on npm.
+# A release from a version tag (v0.2.0): tests, then cli-kanban on npm.
 # npm publishing uses Trusted Publishing (OIDC): no token in the repository; the package's
 # settings on npmjs.com name this repository and this workflow file.
 name: release
@@ -32,8 +32,8 @@ jobs:
       - name: Publish unless this version is already on npm
         run: |
           version=$(node -p "require('./package.json').version")
-          if npm view "microkanban@$version" version >/dev/null 2>&1; then
-            echo "microkanban@$version is already published"
+          if npm view "cli-kanban@$version" version >/dev/null 2>&1; then
+            echo "cli-kanban@$version is already published"
           else
             npm publish --provenance --access public
           fi

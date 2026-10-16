@@ -5,7 +5,7 @@ import { Board } from '../src/board.js';
 
 /** A fresh project folder with a git marker, removed after the test. */
 export function project(t) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'microkanban-'));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'cli-kanban-'));
   fs.mkdirSync(path.join(dir, '.git'));
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   return dir;

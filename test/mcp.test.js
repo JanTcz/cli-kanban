@@ -15,7 +15,7 @@ test('initialize: the client\'s protocol version when supported, else the newest
   const b = board(t);
   const r = rpc(b, 'initialize', { protocolVersion: '2025-03-26' }).result;
   assert.equal(r.protocolVersion, '2025-03-26');
-  assert.deepEqual(r.serverInfo, { name: 'microkanban', version: '9.9.9' });
+  assert.deepEqual(r.serverInfo, { name: 'cli-kanban', version: '9.9.9' });
   assert.deepEqual(r.capabilities, { tools: {} });
   assert.match(r.instructions, /kanban_summary/);
   assert.equal(rpc(b, 'initialize', { protocolVersion: '1999-01-01' }).result.protocolVersion, PROTOCOL_VERSIONS[0]);
@@ -44,20 +44,20 @@ test('every tool works on the board and returns the result as text and structure
   const b = new Board(path.join(dir, 'kanban'));
   assert.deepEqual(call(b, 'kanban_init').structuredContent.created.length, 6);
   const added = call(b, 'kanban_add', { title: 'Do it', state: 'todo', note: '- [ ] one' });
-  assert.equal(added.structuredContent.ticket, 'MK-1');
+  assert.equal(added.structuredContent.ticket, 'KB-1');
   assert.deepEqual(JSON.parse(added.content[0].text), added.structuredContent);
   assert.equal(call(b, 'kanban_add', { ticket: 'J-4', title: 'Jira' }).structuredContent.ticket, 'J-4');
-  assert.equal(call(b, 'kanban_move', { ticket: 'MK-1', to: 'doing', note: 'go' }).structuredContent.to, 'doing');
-  assert.equal(call(b, 'kanban_check', { ticket: 'MK-1', item: 1 }).structuredContent.done, 1);
-  assert.equal(call(b, 'kanban_check', { ticket: 'MK-1', item: 1, uncheck: true }).structuredContent.done, 0);
-  assert.equal(call(b, 'kanban_append', { ticket: 'MK-1', note: 'why', section: 'Notes' }).structuredContent.section, 'Notes');
-  assert.match(call(b, 'kanban_show', { ticket: 'MK-1' }).structuredContent.content, /## Notes\n\nwhy\n$/);
-  assert.deepEqual(call(b, 'kanban_summary').structuredContent.doing, [{ ticket: 'MK-1', title: 'Do it' }]);
+  assert.equal(call(b, 'kanban_move', { ticket: 'KB-1', to: 'doing', note: 'go' }).structuredContent.to, 'doing');
+  assert.equal(call(b, 'kanban_check', { ticket: 'KB-1', item: 1 }).structuredContent.done, 1);
+  assert.equal(call(b, 'kanban_check', { ticket: 'KB-1', item: 1, uncheck: true }).structuredContent.done, 0);
+  assert.equal(call(b, 'kanban_append', { ticket: 'KB-1', note: 'why', section: 'Notes' }).structuredContent.section, 'Notes');
+  assert.match(call(b, 'kanban_show', { ticket: 'KB-1' }).structuredContent.content, /## Notes\n\nwhy\n$/);
+  assert.deepEqual(call(b, 'kanban_summary').structuredContent.doing, [{ ticket: 'KB-1', title: 'Do it' }]);
   assert.equal(call(b, 'kanban_list', { state: 'backlog' }).structuredContent.count, 1);
   assert.equal(call(b, 'kanban_list').structuredContent.count, 2);
   assert.equal(call(b, 'kanban_audit', { max_doing_hours: 0, max_blocked_hours: 0 }).structuredContent.op, 'audit');
   assert.equal(call(b, 'kanban_audit').structuredContent.ok, true);
-  assert.equal(call(b, 'kanban_close', { ticket: 'MK-1', archive: true, sprint: 's' }).structuredContent.archived, true);
+  assert.equal(call(b, 'kanban_close', { ticket: 'KB-1', archive: true, sprint: 's' }).structuredContent.archived, true);
 });
 
 test('a board error is a tool result with isError, anything else a JSON-RPC error', (t) => {

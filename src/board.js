@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 export const STATES = ['backlog', 'todo', 'doing', 'testing', 'blocked', 'done'];
-export const DEFAULT_PREFIX = 'MK';
+export const DEFAULT_PREFIX = 'KB';
 
 const KEY = /^[A-Z][A-Z0-9]*-\d+$/;
 const FILE = /^([A-Za-z][A-Za-z0-9]*-\d+)(?:-(.+))?\.md$/;
@@ -21,11 +21,11 @@ export class KanbanError extends Error {
 }
 
 /**
- * Where the board is: MICROKANBAN_ROOT, else the nearest `kanban/` folder or git
+ * Where the board is: CLI_KANBAN_ROOT, else the nearest `kanban/` folder or git
  * repository above the project directory (CLAUDE_PROJECT_DIR or cwd), else `./kanban`.
  */
 export function findRoot({ cwd = process.cwd(), env = process.env } = {}) {
-  if (env.MICROKANBAN_ROOT) return path.resolve(cwd, env.MICROKANBAN_ROOT);
+  if (env.CLI_KANBAN_ROOT) return path.resolve(cwd, env.CLI_KANBAN_ROOT);
   const start = path.resolve(cwd, env.CLAUDE_PROJECT_DIR || '.');
   let dir = start;
   while (!isDir(path.join(dir, 'kanban')) && !fs.existsSync(path.join(dir, '.git'))) {

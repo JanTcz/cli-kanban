@@ -1,8 +1,8 @@
 {
   "mcpServers": {
-    "microkanban": {
+    "cli-kanban": {
       "command": "npx",
-      "args": ["-y", "microkanban@0", "mcp"]
+      "args": ["-y", "cli-kanban@0", "mcp"]
     }
   }
 }

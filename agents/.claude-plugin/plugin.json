@@ -1,5 +1,5 @@
 {
-  "name": "microkanban",
+  "name": "cli-kanban",
   "version": "0.1.0",
   "description": "A kanban board of Markdown files in your repository: a skill that tells the agent how to work with tickets, and an MCP server to move them.",
   "author": {

@@ -1,9 +1,9 @@
 ---
-name: microkanban
+name: cli-kanban
 description: Track work on the project's kanban board, a kanban/ folder of Markdown tickets (one folder per state). Use when the project has a kanban/ folder, when the user mentions tickets, the board, backlog, todo or doing, when starting or finishing a non-trivial task, or when asked to plan work into tickets.
 ---
 
-# microkanban
+# cli-kanban
 
 The board is the `kanban/` folder in the project. A ticket is a Markdown file
 `<KEY>-<slug>.md`; its state is the folder it is in:
@@ -15,7 +15,7 @@ backlog → todo → doing → testing → done
 ```
 
 Use the `kanban_*` MCP tools when they are available. Otherwise run the CLI:
-`npx -y microkanban@0 <command>` (JSON output when piped). Never move or
+`npx -y cli-kanban@0 <command>` (JSON output when piped). Never move or
 rename ticket files by hand: the tools record every transition in the ticket.
 
 ## When you start
@@ -55,10 +55,10 @@ fix only what the user asks you to.
 ## CLI equivalents
 
 ```bash
-npx -y microkanban@0 list --state=doing
-npx -y microkanban@0 add "Fix the login form" --state=todo --note="- [ ] validation"
-npx -y microkanban@0 move MK-3 doing --note="started"
-npx -y microkanban@0 check MK-3 1
-npx -y microkanban@0 append MK-3 --section=Notes --note="Chose X because Y"
-npx -y microkanban@0 close MK-3 --note="merged in #42"
+npx -y cli-kanban@0 list --state=doing
+npx -y cli-kanban@0 add "Fix the login form" --state=todo --note="- [ ] validation"
+npx -y cli-kanban@0 move KB-3 doing --note="started"
+npx -y cli-kanban@0 check KB-3 1
+npx -y cli-kanban@0 append KB-3 --section=Notes --note="Chose X because Y"
+npx -y cli-kanban@0 close KB-3 --note="merged in #42"
 ```

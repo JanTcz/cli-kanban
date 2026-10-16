@@ -1,5 +1,5 @@
 {
-  "name": "microkanban",
+  "name": "cli-kanban",
   "version": "0.1.0",
   "description": "A kanban board of Markdown files in your repository: a skill that tells the agent how to work with tickets, and an MCP server to move them.",
   "author": {
@@ -14,7 +14,7 @@
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "microkanban",
+    "displayName": "cli-kanban",
     "shortDescription": "Tickets as Markdown files in kanban/, moved by the agent",
     "longDescription": "A kanban board that lives in your repository: one folder per state, one Markdown file per ticket. The agent picks up a ticket, moves it through todo, doing, testing and done, ticks its acceptance criteria and records decisions in it. Works next to Jira or GitHub issues, or on its own.",
     "developerName": "Jan Truhlar",
