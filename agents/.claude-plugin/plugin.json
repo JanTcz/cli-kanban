@@ -1,0 +1,14 @@
+{
+  "name": "microkanban",
+  "version": "0.1.0",
+  "description": "A kanban board of Markdown files in your repository: a skill that tells the agent how to work with tickets, and an MCP server to move them.",
+  "author": {
+    "name": "Jan Truhlar",
+    "email": "me@jant.cz",
+    "url": "https://github.com/JanTcz"
+  },
+  "homepage": "https://github.com/JanTcz/cli-kanban",
+  "repository": "https://github.com/JanTcz/cli-kanban",
+  "license": "MIT",
+  "keywords": ["kanban", "tickets", "markdown", "mcp"]
+}

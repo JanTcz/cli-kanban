@@ -1,0 +1,15 @@
+{
+  "name": "cli-kanban",
+  "description": "microkanban: a kanban board of Markdown files in your repository, for coding agents.",
+  "owner": {
+    "name": "Jan Truhlar",
+    "email": "me@jant.cz"
+  },
+  "plugins": [
+    {
+      "name": "microkanban",
+      "source": "./agents",
+      "description": "A kanban board of Markdown files in your repository: a skill for the agent and an MCP server to move tickets."
+    }
+  ]
+}

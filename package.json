@@ -1,0 +1,49 @@
+{
+  "name": "microkanban",
+  "version": "0.1.0",
+  "description": "A kanban board of Markdown files in your repository, for you and your AI coding agents: CLI, MCP server, and a plugin for Claude Code and Codex. No dependencies.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Jan Truhlar <me@jant.cz>",
+  "homepage": "https://github.com/JanTcz/cli-kanban#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JanTcz/cli-kanban.git"
+  },
+  "bugs": "https://github.com/JanTcz/cli-kanban/issues",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "microkanban": "./bin/microkanban.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "agents"
+  ],
+  "scripts": {
+    "test": "node --test --experimental-test-coverage --test-coverage-include='src/**' --test-coverage-lines=100 --test-coverage-branches=100 --test-coverage-functions=100 test/*.test.js"
+  },
+  "keywords": [
+    "kanban",
+    "markdown",
+    "tickets",
+    "agents",
+    "claude-code",
+    "codex",
+    "mcp",
+    "mcp-server",
+    "cli"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
